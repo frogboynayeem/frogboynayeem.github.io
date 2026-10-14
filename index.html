@@ -1,405 +1,2374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Moshfiqur Rahman Nayeem | CS Researcher &amp; Systems Builder</title>
-  <meta name="description" content="Personal portfolio and research projects of Moshfiqur Rahman Nayeem (frogboynayeem) — CS Student at CUPB, building intelligent terminal tooling and multimodal medical AI.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moshfiqur Rahman Nayeem — Computer Science | moshfiqur.me</title>
+  <meta name="description" content="Moshfiqur Rahman Nayeem (frogboynayeem) — Undergraduate Computer Science student at China University of Petroleum, Beijing (CUPB). Physiological signal analysis, machine learning, and Linux systems tooling." />
+  <link rel="canonical" href="https://moshfiqur.me" />
+
+  <!-- Monospace-forward structure + single clean sans for long-form technical copy -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
   <style>
+    /* ==========================================================================
+       LOCKED DIRECTION C: P3 SWISS THERMAL ECG PAPER
+       --------------------------------------------------------------------------
+       - Base Stock: Uncoated Archival Chart Paper (#F3EFE6)
+       - Cell Surface: Recessed Millimeter Panel (#EBE5D8 / #E2DAC9)
+       -Oscilloscope Strip: Calibrated ECG Paper (#F7F4EC)
+       - Hairline Rules: 1px Solid Archival Rule (#CBBBA4)
+       - Primary Ink: Carbon Stylus Black (#121316)
+       - Single Accent: Millimeter Grid & Stylus Vermilion (#D9381E)
+       - Display / Structural Type: JetBrains Mono (tabular-nums)
+       - Long-Form Copy: IBM Plex Sans (62ch measure)
+       ========================================================================== */
     :root {
-      --bg: #0b0f19;
-      --card-bg: rgba(17, 24, 39, 0.7);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --card-hover-border: rgba(16, 185, 129, 0.4);
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --accent: #10b981;
-      --accent-glow: rgba(16, 185, 129, 0.15);
-      --tag-bg: rgba(16, 185, 129, 0.12);
-      --tag-border: rgba(16, 185, 129, 0.25);
-      --tag-text: #34d399;
-      --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --bg-base: #f3efe6;
+      --bg-panel: #ebe5d8;
+      --bg-elevated: #e2dac9;
+      --bg-osc: #f7f4ec;
+      --grid-line: #cbbba4;
+      --grid-sub: rgba(217, 56, 30, 0.085);
+      --grid-major: rgba(217, 56, 30, 0.21);
+      --text-primary: #121316;
+      --text-secondary: #2e3138;
+      --text-muted: #656058;
+      --accent: #d9381e;
+      --accent-dim: rgba(217, 56, 30, 0.09);
+      --accent-border: rgba(217, 56, 30, 0.48);
       --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --scanline-opacity: 0.014;
     }
 
-    * {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
-      background-attachment: fixed;
-      font-family: var(--font-body);
-      color: var(--text-main);
-      line-height: 1.65;
-      padding: 48px 20px 80px;
-    }
-
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    header {
-      margin-bottom: 40px;
-    }
-
-    .badge-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-border);
-      color: var(--tag-text);
-      font-size: 0.8rem;
-      font-weight: 500;
+    html {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
       font-family: var(--font-mono);
-      padding: 4px 10px;
-      border-radius: 9999px;
-      margin-bottom: 16px;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--bg-osc);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtle mechanical thermal-feed micro-rule drift (8s linear cycle) */
+    @keyframes scanline-drift {
+      0% {
+        transform: translateY(0px);
+      }
+      100% {
+        transform: translateY(24px);
+      }
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: -24px;
+      left: 0;
+      right: 0;
+      bottom: -24px;
+      pointer-events: none;
+      z-index: 90;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(18, 19, 22, var(--scanline-opacity)) 2px,
+        rgba(18, 19, 22, var(--scanline-opacity)) 4px
+      );
+      animation: scanline-drift 8s linear infinite;
+      will-change: transform;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-mono);
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       TOP TELEMETRY BAR
+       ========================================================================== */
+    .telemetry-header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background-color: var(--bg-base);
+      border-bottom: 1px solid var(--grid-line);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .telemetry-bar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: stretch;
+      border-left: 1px solid var(--grid-line);
+      border-right: 1px solid var(--grid-line);
+    }
+
+    .t-cell {
+      padding: 0.68rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-right: 1px solid var(--grid-line);
+      white-space: nowrap;
     }
 
     .status-dot {
       width: 7px;
       height: 7px;
       background-color: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent);
+      display: inline-block;
+      flex-shrink: 0;
     }
 
-    h1 {
-      font-size: 2.25rem;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      color: #fff;
-      line-height: 1.2;
-      margin-bottom: 8px;
+    .status-dot.pulse {
+      animation: mech-blink 1.6s steps(2, start) infinite;
     }
 
-    .subtitle {
+    @keyframes mech-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: stretch;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-link {
+      padding: 0.68rem 0.95rem;
+      border-right: 1px solid var(--grid-line);
       color: var(--text-muted);
-      font-size: 1.05rem;
-      font-weight: 400;
-    }
-
-    .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .social-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .social-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    section {
-      margin-bottom: 48px;
-    }
-
-    h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: #fff;
-      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.4rem;
+      white-space: nowrap;
+      transition: background-color 60ms linear, color 60ms linear;
     }
 
-    h2::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--card-border);
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: var(--accent-dim);
+      color: var(--text-primary);
     }
 
-    p {
-      color: #d1d5db;
-      font-size: 0.96rem;
-      margin-bottom: 14px;
+    .nav-link .idx {
+      color: var(--accent);
+      font-weight: 700;
     }
 
-    .project-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(8px);
-      transition: all 0.25s ease;
+    .header-readout {
+      padding: 0.68rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      background-color: var(--bg-panel);
+    }
+
+    .header-readout strong {
+      color: var(--accent);
+    }
+
+    /* ==========================================================================
+       12-COLUMN SWISS GRID CHASSIS
+       ========================================================================== */
+    .chassis {
+      max-width: 1400px;
+      margin: 0 auto;
+      border-left: 1px solid var(--grid-line);
+      border-right: 1px solid var(--grid-line);
       position: relative;
     }
 
-    .project-card:hover {
-      border-color: var(--card-hover-border);
-      box-shadow: 0 8px 24px var(--accent-glow);
-      transform: translateY(-2px);
+    .swiss-section {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      border-bottom: 1px solid var(--grid-line);
     }
 
-    .project-header {
+    .rail-col {
+      grid-column: span 3;
+      border-right: 1px solid var(--grid-line);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: var(--bg-base);
+      user-select: none;
+    }
+
+    .main-col {
+      grid-column: span 9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sec-number {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sec-title {
+      font-size: clamp(1.2rem, 1.9vw, 1.55rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .rail-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .rail-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+      border-top: 1px solid var(--grid-line);
+      padding-top: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    .rail-meta div {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .rail-meta span:last-child {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* ==========================================================================
+       HERO & OSCILLOSCOPE MODULE (CH-00)
+       ========================================================================== */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+    }
+
+    .hero-statement-cell {
+      grid-column: span 6;
+      padding: 2.75rem 2.25rem 2.25rem;
+      border-right: 1px solid var(--grid-line);
+      border-bottom: 1px solid var(--grid-line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-telemetry-cell {
+      grid-column: span 3;
+      padding: 2rem 1.5rem;
+      border-bottom: 1px solid var(--grid-line);
+      background-color: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-mono);
+      font-size: clamp(2.15rem, 4.7vw, 4.1rem);
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 0.96;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      color: var(--text-primary);
+    }
+
+    .hero-name .handle {
+      display: block;
+      font-size: clamp(0.86rem, 1.35vw, 1.1rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+      margin-top: 0.65rem;
+      text-transform: lowercase;
+    }
+
+    .longform-copy {
+      font-family: var(--font-sans);
+      font-size: 0.98rem;
+      line-height: 1.68;
+      color: var(--text-secondary);
+      max-width: 62ch;
+    }
+
+    .longform-copy strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .mono-tag {
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      padding: 0.08rem 0.36rem;
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--grid-line);
+      color: var(--text-primary);
+    }
+
+    .hero-actions {
+      margin-top: 2rem;
+      padding-top: 1.35rem;
+      border-top: 1px solid var(--grid-line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .inst-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.65rem 0.95rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--grid-line);
+      background-color: var(--bg-panel);
+      color: var(--text-primary);
+      transition: background-color 60ms linear, border-color 60ms linear, color 60ms linear;
+    }
+
+    .inst-btn:hover {
+      border-color: var(--accent);
+      background-color: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .inst-btn.primary {
+      background-color: var(--accent);
+      color: var(--bg-osc);
+      border-color: var(--accent);
+    }
+
+    .inst-btn.primary:hover {
+      background-color: var(--text-primary);
+      border-color: var(--text-primary);
+      color: var(--bg-osc);
+    }
+
+    .readout-block {
+      border-bottom: 1px solid var(--grid-line);
+      padding-bottom: 0.9rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .readout-block:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .readout-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .readout-value {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .readout-sub {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 0.2rem;
+    }
+
+    /* Live Physiological Oscilloscope Deck */
+    .oscilloscope-deck {
+      grid-column: span 9;
+      background-color: var(--bg-osc);
+      position: relative;
+    }
+
+    .osc-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 0.6rem 1.25rem;
+      border-bottom: 1px solid var(--grid-line);
+      background-color: var(--bg-panel);
+      font-size: 0.68rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      gap: 0.75rem;
+    }
+
+    .osc-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.15rem;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .osc-metrics strong {
+      color: var(--text-primary);
+    }
+
+    .osc-metrics .accent-val {
+      color: var(--accent);
+    }
+
+    .osc-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .osc-chip {
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--grid-line);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      background-color: var(--bg-base);
+      transition: border-color 60ms linear, color 60ms linear, background-color 60ms linear;
+    }
+
+    .osc-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .osc-chip.active {
+      border-color: var(--accent);
+      background-color: var(--accent);
+      color: var(--bg-osc);
+      font-weight: 600;
+    }
+
+    .osc-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 215px;
+      cursor: crosshair;
+      touch-action: pan-y;
+    }
+
+    #ecgCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .osc-overlay-hud {
+      position: absolute;
+      top: 0.65rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      pointer-events: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .osc-footer-hud {
+      position: absolute;
+      bottom: 0.55rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      pointer-events: none;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================================
+       SCROLL-TRIGGERED 1mV CALIBRATION & ECG TRACE DIVIDERS
+       ========================================================================== */
+    .ecg-divider {
+      border-bottom: 1px solid var(--grid-line);
+      background-color: var(--bg-panel);
+      padding: 0.42rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ecg-divider svg {
+      flex: 1;
+      height: 22px;
+      overflow: visible;
+    }
+
+    .trace-divider-path {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.45;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      transition: stroke-dashoffset 1.35s steps(36, end);
+    }
+
+    .ecg-divider.drawn .trace-divider-path {
+      stroke-dashoffset: 0;
+    }
+
+    .cal-pulse-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .divider-channel-tag {
+      white-space: nowrap;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       RESEARCH PROJECTS & EXPLORATION MODULES (CH-01)
+       ========================================================================== */
+    .project-block {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .project-block:last-child {
+      border-bottom: none;
+    }
+
+    .project-narrative {
+      grid-column: span 5;
+      padding: 2.15rem 2.25rem;
+      border-right: 1px solid var(--grid-line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-specs {
+      grid-column: span 4;
+      padding: 2.15rem 1.75rem;
+      background-color: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .module-kicker {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.55rem;
+    }
+
+    .module-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.76rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .spec-table tr {
+      border-bottom: 1px solid var(--grid-line);
+    }
+
+    .spec-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .spec-table td {
+      padding: 0.58rem 0.2rem;
+      vertical-align: top;
+    }
+
+    .spec-table td:first-child {
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      padding-right: 0.75rem;
+    }
+
+    .spec-table td:last-child {
+      text-align: right;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .exploration-banner {
+      grid-column: span 9;
+      padding: 2.15rem 2.25rem;
+      background-color: var(--bg-base);
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .exploration-main {
+      grid-column: span 6;
+    }
+
+    .exploration-status-box {
+      grid-column: span 3;
+      border: 1px solid var(--grid-line);
+      background-color: var(--bg-panel);
+      padding: 1.25rem;
+      font-size: 0.74rem;
+    }
+
+    /* ==========================================================================
+       ACADEMICS (CH-02), SYSTEMS & BRAIN.ZSH (CH-03), PONYTAIL PRINCIPLE (CH-04)
+       ========================================================================== */
+    .edu-row {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+    }
+
+    .edu-main {
+      grid-column: span 6;
+      padding: 2.15rem 2.25rem;
+      border-right: 1px solid var(--grid-line);
+    }
+
+    .edu-aside {
+      grid-column: span 3;
+      padding: 2.15rem 1.5rem;
+      background-color: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .badge-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--accent-border);
+      background-color: var(--accent-dim);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .spec-list li {
+      margin-bottom: 0.45rem;
+    }
+
+    .spec-list strong {
+      color: var(--text-primary);
+    }
+
+    .sys-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sys-cell {
+      padding: 1.85rem 2rem;
+      border-right: 1px solid var(--grid-line);
+      border-bottom: 1px solid var(--grid-line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background-color 60ms linear;
+    }
+
+    .sys-cell:nth-child(2n) {
+      border-right: none;
+    }
+
+    .sys-cell:hover {
+      background-color: var(--bg-panel);
+    }
+
+    .sys-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-      gap: 8px;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--grid-line);
     }
 
-    .project-title {
-      font-size: 1.15rem;
+    .sys-id {
+      font-size: 0.68rem;
+      color: var(--accent);
       font-weight: 600;
-      color: #fff;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
-    .project-title:hover {
-      color: var(--accent);
+    .sys-name {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
     }
 
-    .project-badge {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
+    .sys-desc {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.62;
+      margin-bottom: 1.2rem;
+    }
+
+    .sys-kv {
+      font-size: 0.7rem;
       color: var(--text-muted);
-      border: 1px solid var(--card-border);
-      padding: 2px 8px;
-      border-radius: 6px;
-    }
-
-    .project-desc {
-      color: var(--text-muted);
-      font-size: 0.92rem;
-      margin-bottom: 14px;
-    }
-
-    .project-features {
-      list-style-type: none;
-      margin-bottom: 16px;
-    }
-
-    .project-features li {
-      position: relative;
-      padding-left: 18px;
-      font-size: 0.88rem;
-      color: #d1d5db;
-      margin-bottom: 6px;
-    }
-
-    .project-features li::before {
-      content: "▹";
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-    }
-
-    .tags {
+      border-top: 1px solid var(--grid-line);
+      padding-top: 0.65rem;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+      justify-content: space-between;
+      font-variant-numeric: tabular-nums;
+      text-transform: uppercase;
     }
 
-    .tag {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      background: rgba(255, 255, 255, 0.04);
-      color: #cbd5e1;
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+    .sys-kv span:last-child {
+      color: var(--accent);
+      font-weight: 600;
     }
 
-    .quick-list {
+    .terminal-console {
+      padding: 1.4rem 2.25rem;
+      background-color: var(--bg-osc);
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+
+    .term-prompt {
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .term-output {
+      color: var(--text-secondary);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-      margin-top: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.45rem 1.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--accent);
+      margin-top: 0.45rem;
     }
 
-    .quick-item {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 12px 14px;
+    /* Philosophy Section — The Ponytail Principle */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
     }
 
-    .quick-item-title {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-      font-family: var(--font-mono);
+    .philosophy-primary {
+      grid-column: span 6;
+      padding: 2.25rem;
+      border-right: 1px solid var(--grid-line);
     }
 
-    .quick-item-val {
-      font-size: 0.92rem;
-      font-weight: 500;
-      color: #fff;
+    .philosophy-axioms {
+      grid-column: span 3;
+      padding: 2.25rem 1.5rem;
+      background-color: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    footer {
-      border-top: 1px solid var(--card-border);
-      padding-top: 24px;
+    /* Transmission / Contact (CH-05) */
+    .comms-grid {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+    }
+
+    .comms-primary {
+      grid-column: span 5;
+      padding: 2.25rem;
+      border-right: 1px solid var(--grid-line);
+    }
+
+    .comms-links {
+      grid-column: span 4;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .comms-link-row {
+      flex: 1;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--grid-line);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-family: var(--font-mono);
+      transition: background-color 60ms linear;
     }
 
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
+    .comms-link-row:last-child {
+      border-bottom: none;
     }
 
-    footer a:hover {
+    .comms-link-row:hover {
+      background-color: var(--accent-dim);
+    }
+
+    .comms-link-row:hover .comms-arrow {
       color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .comms-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .comms-val {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      word-break: break-all;
+    }
+
+    .comms-arrow {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: transform 60ms linear, color 60ms linear;
+    }
+
+    .colophon {
+      max-width: 1400px;
+      margin: 0 auto;
+      border-left: 1px solid var(--grid-line);
+      border-right: 1px solid var(--grid-line);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background-color: var(--bg-panel);
+    }
+
+    .scroll-scale {
+      position: fixed;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      pointer-events: none;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .scale-tick {
+      width: 8px;
+      height: 1px;
+      background-color: var(--grid-line);
+    }
+
+    .scale-tick.major {
+      width: 16px;
+      background-color: var(--accent);
+    }
+
+    .telemetry-toast {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 100;
+      background-color: var(--bg-osc);
+      border: 1px solid var(--accent);
+      color: var(--text-primary);
+      padding: 0.7rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .telemetry-toast.visible {
+      display: inline-flex;
+    }
+
+    /* ==========================================================================
+       PREFERS-REDUCED-MOTION COMPLIANCE
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      body::after {
+        animation: none !important;
+      }
+      .status-dot.pulse {
+        animation: none !important;
+        opacity: 1 !important;
+      }
+      .trace-divider-path {
+        transition: none !important;
+        stroke-dashoffset: 0 !important;
+      }
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS (TABLET & MOBILE REFINEMENT)
+       ========================================================================== */
+    @media (max-width: 1080px) {
+      .swiss-section {
+        grid-template-columns: 1fr;
+      }
+      .rail-col {
+        grid-column: span 1;
+        border-right: none;
+        border-bottom: 1px solid var(--grid-line);
+        padding: 1.25rem 1.5rem;
+        background-color: var(--bg-panel);
+      }
+      .rail-meta {
+        margin-top: 0.9rem;
+        padding-top: 0.75rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.35rem 1.5rem;
+      }
+      .main-col {
+        grid-column: span 1;
+      }
+      .scroll-scale {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .telemetry-bar-inner {
+        grid-template-columns: 1fr;
+      }
+      .t-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--grid-line);
+        justify-content: space-between;
+        padding: 0.55rem 0.9rem;
+      }
+      .header-readout {
+        display: none;
+      }
+      .nav-link {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.68rem;
+      }
+      .hero-grid,
+      .project-block,
+      .exploration-banner,
+      .edu-row,
+      .philosophy-grid,
+      .comms-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-statement-cell,
+      .hero-telemetry-cell,
+      .oscilloscope-deck,
+      .project-narrative,
+      .project-specs,
+      .exploration-main,
+      .exploration-status-box,
+      .edu-main,
+      .edu-aside,
+      .philosophy-primary,
+      .philosophy-axioms,
+      .comms-primary,
+      .comms-links {
+        grid-column: span 1;
+        border-right: none;
+      }
+      .project-narrative,
+      .edu-main,
+      .philosophy-primary,
+      .comms-primary {
+        border-bottom: 1px solid var(--grid-line);
+      }
+      .sys-grid {
+        grid-template-columns: 1fr;
+      }
+      .sys-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--grid-line);
+        padding: 1.5rem 1.15rem;
+      }
+      .hero-statement-cell,
+      .project-narrative,
+      .exploration-banner,
+      .edu-main,
+      .philosophy-primary,
+      .comms-primary {
+        padding: 1.5rem 1.15rem;
+      }
+      .hero-telemetry-cell,
+      .project-specs,
+      .edu-aside,
+      .philosophy-axioms {
+        padding: 1.35rem 1.15rem;
+      }
+      .terminal-console {
+        padding: 1.25rem 1.15rem;
+      }
+      .osc-toolbar {
+        padding: 0.6rem 0.9rem;
+      }
+      .osc-metrics {
+        gap: 0.65rem 1rem;
+        font-size: 0.64rem;
+      }
+      .osc-canvas-wrap {
+        height: 190px;
+      }
+      .osc-overlay-hud,
+      .osc-footer-hud {
+        left: 0.85rem;
+        right: 0.85rem;
+        font-size: 0.6rem;
+      }
+      .ecg-divider {
+        padding: 0.35rem 0.9rem;
+        gap: 0.5rem;
+      }
+      .divider-channel-tag {
+        display: none;
+      }
+      .inst-btn {
+        width: 100%;
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="badge-status">
-        <span class="status-dot"></span>
-        Undergraduate CS Researcher &amp; Systems Builder
-      </div>
-      <h1>Moshfiqur Rahman Nayeem</h1>
-      <p class="subtitle">Computer Science &amp; Technology @ China University of Petroleum (Beijing)</p>
-      
-      <div class="social-links">
-        <a class="social-btn" href="https://github.com/frogboynayeem" target="_blank" rel="noopener noreferrer">
-          <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-          GitHub
-        </a>
-        <a class="social-btn" href="mailto:frogboynayeem@gmail.com">
-          <svg height="16" width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-          Email
-        </a>
-      </div>
-    </header>
 
-    <section>
-      <h2>About</h2>
-      <p>
-        I'm an undergraduate studying Computer Science and Technology at <strong>China University of Petroleum (Beijing)</strong> under the <strong>CUPB First-Class Scholarship for International Students</strong>.
-      </p>
-      <p>
-        My work centers on <strong>systems engineering</strong>, <strong>terminal productivity tooling</strong>, and <strong>multimodal medical AI</strong>. I prefer build-first learning, minimal architectures, and high-leverage tools that automate developer workflows from the Linux shell to resource-constrained deep learning inference.
-      </p>
-
-      <div class="quick-list">
-        <div class="quick-item">
-          <div class="quick-item-title">EDUCATION</div>
-          <div class="quick-item-val">B.Eng. Computer Science ('27)</div>
-        </div>
-        <div class="quick-item">
-          <div class="quick-item-title">FOCUS</div>
-          <div class="quick-item-val">Multimodal AI &amp; Systems</div>
-        </div>
-        <div class="quick-item">
-          <div class="quick-item-title">ENVIRONMENT</div>
-          <div class="quick-item-val">Arch Linux · Neovim · Zsh</div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Featured Work &amp; Research</h2>
-
-      <!-- brain.zsh -->
-      <div class="project-card">
-        <div class="project-header">
-          <a class="project-title" href="https://github.com/frogboynayeem/brain.zsh" target="_blank" rel="noopener noreferrer">
-            brain.zsh
-            <svg height="14" width="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-          </a>
-          <span class="project-badge">Open Source · Shell</span>
-        </div>
-        <p class="project-desc">
-          Context-aware terminal layer for Zsh. Integrates state machines, project detection, automated LLM routing, and structured compiler error parsing — lazy-loaded in ~30ms.
-        </p>
-        <ul class="project-features">
-          <li><strong>Zero-re-scan cache:</strong> Persistent walk-up project detection across Rust, Python, Go, Node, and Docker environments.</li>
-          <li><strong>Intelligent AI context routing:</strong> Compiles git state, branch history, and execution context for CLI AI tools (opencode, claude, llm).</li>
-          <li><strong>Structured error parsing:</strong> Regex engine for Rust, Python, JS/TS, Go, and shell stack traces, offering actionable fix suggestions.</li>
-        </ul>
-        <div class="tags">
-          <span class="tag">Zsh</span>
-          <span class="tag">CLI Tooling</span>
-          <span class="tag">LLM Routing</span>
-          <span class="tag">Lazy Loading</span>
-          <span class="tag">MIT</span>
-        </div>
+  <header class="telemetry-header" role="banner">
+    <div class="telemetry-bar-inner">
+      <div class="t-cell">
+        <span class="status-dot pulse" aria-hidden="true"></span>
+        <span><strong>MOSHFIQUR.ME</strong> // ID: FROGBOYNAYEEM</span>
       </div>
 
-      <!-- Multimodal ECG-RAG Thesis -->
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-title">
-            Hierarchical Lead-Aware Multimodal ECG-RAG
+      <nav class="nav-links" aria-label="Primary Instrument Channels">
+        <a href="#ch-00" class="nav-link active"><span class="idx">00</span>OVERVIEW</a>
+        <a href="#ch-01" class="nav-link"><span class="idx">01</span>RESEARCH &amp; PROJECTS</a>
+        <a href="#ch-02" class="nav-link"><span class="idx">02</span>CUPB BEIJING</a>
+        <a href="#ch-03" class="nav-link"><span class="idx">03</span>SYSTEMS &amp; BRAIN.ZSH</a>
+        <a href="#ch-04" class="nav-link"><span class="idx">04</span>PONYTAIL PRINCIPLE</a>
+        <a href="#ch-05" class="nav-link"><span class="idx">05</span>CONTACT</a>
+      </nav>
+
+      <div class="header-readout" aria-label="Paper Calibration Standard">
+        <span>PAPER: <strong>25.0 mm/s</strong></span>
+        <span>GAIN: <strong>10 mm/mV</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Right-hand Scroll Depth Millimeter Scale -->
+  <aside class="scroll-scale" aria-hidden="true">
+    <span id="scrollDepthReadout">000 mm</span>
+    <div class="scale-tick major"></div>
+    <div class="scale-tick"></div>
+    <div class="scale-tick"></div>
+    <div class="scale-tick"></div>
+    <div class="scale-tick major"></div>
+    <div class="scale-tick"></div>
+    <div class="scale-tick"></div>
+    <div class="scale-tick"></div>
+    <div class="scale-tick major"></div>
+  </aside>
+
+  <main class="chassis">
+
+    <!-- ======================================================================
+         CHANNEL 00 // IDENTITY & PHYSIOLOGICAL SIGNAL MONITOR
+         ====================================================================== -->
+    <section class="swiss-section" id="ch-00">
+      <aside class="rail-col">
+        <div>
+          <div class="sec-number">
+            <span>CH-00</span>
+            <span>//</span>
+            <span>IDENTITY</span>
           </div>
-          <span class="project-badge">Thesis Research · In Progress</span>
+          <h2 class="sec-title">PROFILE READOUT</h2>
+          <p class="rail-desc">
+            Undergraduate Computer Science record, physiological signal analysis projects, and Unix systems environment.
+          </p>
         </div>
-        <p class="project-desc">
-          Explainable Myocardial Infarction diagnosis on 12-lead Electrocardiograms (School of Artificial Intelligence, CUPB). Status: Proposal approved; baseline experiments on PTB-XL in progress.
-        </p>
-        <ul class="project-features">
-          <li><strong>Hierarchical Lead-Instance Pooling:</strong> Aims to address spatial lead-blindness in 12-lead ECGs by preserving anatomical territories (inferior, anterior, lateral).</li>
-          <li><strong>Guideline-Grounded Retrieval:</strong> Explores RAG pipelines grounding model predictions in ESC/AHA acute coronary syndrome guidelines to reduce clinical hallucinations.</li>
-          <li><strong>Resource-Constrained Optimization:</strong> Designed for lightweight deployment and reproducible evaluation on standard PTB-XL benchmarks.</li>
-        </ul>
-        <div class="tags">
-          <span class="tag">PyTorch</span>
-          <span class="tag">Multimodal AI</span>
-          <span class="tag">Medical RAG</span>
-          <span class="tag">PTB-XL</span>
-          <span class="tag">Research</span>
+
+        <div class="rail-meta">
+          <div><span>INSTITUTION</span><span>CUPB BEIJING</span></div>
+          <div><span>SCHOLARSHIP</span><span>FIRST-CLASS</span></div>
+          <div><span>EXPLORATION</span><span>ECG + RAG</span></div>
+          <div><span>ENVIRONMENT</span><span>ARCH / NVIM / ZSH</span></div>
+          <div><span>CLOCK_CST</span><span id="beijingClock">--:--:-- CST</span></div>
+          <div><span>PAPER_FEED</span><span id="steppedCounter">0000 s</span></div>
+        </div>
+      </aside>
+
+      <div class="main-col">
+        <div class="hero-grid">
+          <!-- Asymmetric 6-Column Identity Statement -->
+          <div class="hero-statement-cell">
+            <div>
+              <div class="hero-kicker">
+                <span>[CAL: 1.0 mV // 25.0 mm/s]</span>
+                <span>&bull;</span>
+                <span>COMPUTER SCIENCE UNDERGRADUATE</span>
+              </div>
+
+              <h1 class="hero-name">
+                MOSHFIQUR<br />RAHMAN NAYEEM
+                <span class="handle">moshfiqur.me // github.com/frogboynayeem</span>
+              </h1>
+
+              <p class="longform-copy">
+                Undergraduate Computer Science student at <strong>China University of Petroleum, Beijing (CUPB)</strong> and <strong>First-Class Scholarship</strong> recipient. My work focuses on physiological signal processing, wearable biosensor analysis, and machine learning—currently exploring <strong>ECG + RAG</strong> (retrieval-augmented generation applied to electrocardiograms) as a research direction alongside terminal tooling in <span class="mono-tag">Arch Linux</span>, <span class="mono-tag">Neovim</span>, and <span class="mono-tag">Zsh</span>.
+              </p>
+            </div>
+
+            <div class="hero-actions">
+              <a href="#ch-01" class="inst-btn primary">
+                <span>[01] RESEARCH &amp; PROJECTS</span>
+                <span>&rarr;</span>
+              </a>
+              <a href="https://github.com/frogboynayeem" target="_blank" rel="noopener noreferrer" class="inst-btn">
+                <span>GITHUB // @FROGBOYNAYEEM</span>
+                <span>&#8599;</span>
+              </a>
+              <a href="mailto:2023030060@student.cup.edu.cn" class="inst-btn">
+                <span>2023030060@STUDENT.CUP.EDU.CN</span>
+              </a>
+              <button type="button" class="inst-btn" id="copyEmailHeroBtn">
+                <span>[COPY EMAIL]</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3-Column Verified Dossier Readout -->
+          <div class="hero-telemetry-cell">
+            <div>
+              <div class="readout-block">
+                <div class="readout-label">00.1 // INSTITUTION</div>
+                <div class="readout-value">China University of Petroleum, Beijing (CUPB)</div>
+                <div class="readout-sub">B.Sc. Computer Science &amp; Technology</div>
+              </div>
+
+              <div class="readout-block">
+                <div class="readout-label">00.2 // ACADEMIC STANDING</div>
+                <div class="readout-value">First-Class Scholarship</div>
+                <div class="readout-sub">CUPB Academic Distinction</div>
+              </div>
+
+              <div class="readout-block">
+                <div class="readout-label">00.3 // RESEARCH INTEREST</div>
+                <div class="readout-value">ECG + RAG Exploration</div>
+                <div class="readout-sub">Biosignal Processing &amp; Retrieval</div>
+              </div>
+
+              <div class="readout-block">
+                <div class="readout-label">00.4 // WORKSTATION</div>
+                <div class="readout-value">Arch Linux &bull; Neovim &bull; Zsh</div>
+                <div class="readout-sub">brain.zsh &amp; CLI Tooling</div>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--grid-line); padding-top: 0.8rem; font-size: 0.68rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+              <span>CHART_STANDARD</span>
+              <span style="color: var(--accent); font-weight: 600;">P3-THERMAL PAPER</span>
+            </div>
+          </div>
+
+          <!-- Full-Width 9-Column Physiological Waveform Chart Strip -->
+          <div class="oscilloscope-deck">
+            <div class="osc-toolbar">
+              <div class="osc-metrics">
+                <span>TRACE: <strong id="leadLabel" class="accent-val">LEAD II (SINUS RHYTHM)</strong></span>
+                <span>CAL: <strong>1.0 mV / 10 mm</strong></span>
+                <span>SWEEP: <strong>25.0 mm/s</strong></span>
+                <span>HR: <strong id="hrReadout">68 BPM</strong></span>
+                <span>R-R: <strong id="rrReadout">882 ms</strong></span>
+              </div>
+
+              <div class="osc-controls" role="group" aria-label="Oscilloscope Signal Controls">
+                <button type="button" class="osc-chip active" data-lead="normal">LEAD II</button>
+                <button type="button" class="osc-chip" data-lead="filtered">FILTERED (0.5–40Hz)</button>
+                <button type="button" class="osc-chip" data-lead="cal">1mV CAL STEP</button>
+                <button type="button" class="osc-chip active" id="fiducialBtn">FIDUCIALS: ON</button>
+                <button type="button" class="osc-chip" id="freezeTraceBtn">HOLD: OFF</button>
+              </div>
+            </div>
+
+            <div class="osc-canvas-wrap" id="oscWrap">
+              <canvas id="ecgCanvas" aria-label="Physiological Electrocardiogram Thermal Chart Monitor"></canvas>
+
+              <div class="osc-overlay-hud">
+                <span>1mV CALIBRATION REFERENCE // P-Q-R-S-T MORPHOLOGY</span>
+                <span id="cursorProbeReadout">PROBE: HOVER OR DRAG TO MEASURE [t, mV]</span>
+              </div>
+
+              <div class="osc-footer-hud">
+                <span>SIGNAL DOMAIN: TIME-SERIES BIOSIGNAL TELEMETRY</span>
+                <span id="motionStateReadout">STYLUS SWEEP: ACTIVE</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>Engineering Philosophy</h2>
-      <p>
-        I follow the <strong>Ponytail Principle</strong> (the practice of choosing the simplest, most minimal solution that genuinely works): the cleanest code is often the code you didn't have to write. Prioritize standard libraries, native OS features, and minimal parameter additions over speculative abstractions and architectural bloat.
-      </p>
+    <!-- Scroll-Triggered 1mV Calibration Pulse + ECG Divider -->
+    <div class="ecg-divider" data-divider aria-hidden="true">
+      <span class="cal-pulse-tag">[1mV CAL] // 25 mm/s</span>
+      <svg viewBox="0 0 800 24" preserveAspectRatio="none">
+        <path class="trace-divider-path" d="M 0 18 L 55 18 L 55 4 L 90 4 L 90 18 L 210 18 L 220 14 L 230 18 L 245 18 L 250 21 L 258 2 L 265 23 L 272 18 L 300 18 L 315 11 L 332 18 L 520 18 L 530 14 L 540 18 L 555 18 L 560 21 L 568 2 L 575 23 L 582 18 L 610 18 L 625 11 L 642 18 L 800 18" />
+      </svg>
+      <span class="divider-channel-tag">CH-01 // RESEARCH &amp; PROJECTS</span>
+    </div>
+
+    <!-- ======================================================================
+         CHANNEL 01 // RESEARCH EXPLORATION & BIOSIGNAL PROJECTS
+         ====================================================================== -->
+    <section class="swiss-section" id="ch-01">
+      <aside class="rail-col">
+        <div>
+          <div class="sec-number">
+            <span>CH-01</span>
+            <span>//</span>
+            <span>RESEARCH &amp; WORK</span>
+          </div>
+          <h2 class="sec-title">BIOSIGNAL &amp; ML PROJECTS</h2>
+          <p class="rail-desc">
+            Coursework and research reports on physiological time-series classification, alongside ongoing exploration into ECG and retrieval-augmented generation.
+          </p>
+        </div>
+
+        <div class="rail-meta">
+          <div><span>SUPERVISOR</span><span>PROF. XIAOHE CHEN</span></div>
+          <div><span>INSTITUTION</span><span>CUPB BEIJING</span></div>
+          <div><span>TERM</span><span>LATE 2024</span></div>
+          <div><span>DATASET</span><span>PHYSIONET DREAMT</span></div>
+          <div><span>EXPLORATION</span><span>ECG + RAG</span></div>
+        </div>
+      </aside>
+
+      <div class="main-col">
+
+        <!-- Project 01: Sleep Stage & Apnea Event Analysis (DREAMT) -->
+        <article class="project-block">
+          <div class="project-narrative">
+            <div>
+              <div class="module-kicker">PROJECT 01 // COURSEWORK &amp; RESEARCH REPORT (LATE 2024)</div>
+              <h3 class="module-heading">
+                Sleep Stage &amp; Apnea Event Analysis
+              </h3>
+              <p class="longform-copy" style="margin-bottom: 1rem;">
+                Developed a multi-channel physiological classification pipeline on the <strong>PhysioNet DREAMT</strong> wearable biosensor dataset, incorporating blood volume pulse (<span class="mono-tag">BVP</span>), heart rate (<span class="mono-tag">HR</span>), electrodermal activity (<span class="mono-tag">EDA</span>), skin temperature (<span class="mono-tag">TEMP</span>), and tri-axial accelerometer channels.
+              </p>
+              <p class="longform-copy">
+                Consolidated <strong>25 Parquet files</strong> through missing-value imputation, signal standardization, and domain feature engineering. Evaluated an <strong>XGBoost</strong> classifier achieving <strong>85% accuracy</strong> across four-class sleep stage classification alongside obstructive apnea event distribution analysis, with temporal sequence modeling explored via <strong>LSTM (86% accuracy)</strong>.
+              </p>
+            </div>
+            <div style="margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--grid-line); font-size: 0.72rem; color: var(--text-muted);">
+              SUBMITTED TO PROF. XIAOHE CHEN // CHINA UNIVERSITY OF PETROLEUM, BEIJING (LATE 2024)
+            </div>
+          </div>
+
+          <div class="project-specs">
+            <div>
+              <div class="module-kicker">PIPELINE SPECIFICATION</div>
+              <table class="spec-table" aria-label="Sleep Stage and Apnea Event Analysis Specifications">
+                <tbody>
+                  <tr>
+                    <td>Dataset</td>
+                    <td>PhysioNet DREAMT Wearable Biosensor</td>
+                  </tr>
+                  <tr>
+                    <td>Sensor Channels</td>
+                    <td>BVP, HR, EDA, TEMP, 3-Axis ACC</td>
+                  </tr>
+                  <tr>
+                    <td>Data Ingestion</td>
+                    <td>25 Parquet Files Consolidated</td>
+                  </tr>
+                  <tr>
+                    <td>Preprocessing</td>
+                    <td>Imputation, Standardization, Feature Eng.</td>
+                  </tr>
+                  <tr>
+                    <td>Primary Classifier</td>
+                    <td>XGBoost (4-Class Sleep Stage: 85% Acc.)</td>
+                  </tr>
+                  <tr>
+                    <td>Temporal Modeling</td>
+                    <td>LSTM Exploration (86% Acc.)</td>
+                  </tr>
+                  <tr>
+                    <td>Evaluation</td>
+                    <td>Obstructive Apnea Distribution &amp; Confusion Matrix</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 02: Real-Time Sleep Stage Estimation (BioSPPy + Tkinter) -->
+        <article class="project-block">
+          <div class="project-narrative">
+            <div>
+              <div class="module-kicker">PROJECT 02 // COURSEWORK &amp; RESEARCH REPORT (LATE 2024)</div>
+              <h3 class="module-heading">
+                Real-Time Sleep Stage Estimation
+              </h3>
+              <p class="longform-copy" style="margin-bottom: 1rem;">
+                Implemented an end-to-end biosignal filtering and feature extraction workflow using <strong>BioSPPy</strong>, computing time-domain metrics, power spectral density (PSD), heart-rate variability (HRV) indices, and movement intensity from raw physiological streams.
+              </p>
+              <p class="longform-copy">
+                Conducted systematic model comparison across <strong>Random Forest</strong>, <strong>Support Vector Machine (SVM)</strong>, and <strong>neural network</strong> architectures with hyperparameter tuning, paired with an interactive <strong>Tkinter GUI</strong> for inspecting raw versus filtered waveforms and live sleep stage predictions.
+              </p>
+            </div>
+            <div style="margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--grid-line); font-size: 0.72rem; color: var(--text-muted);">
+              SUBMITTED TO PROF. XIAOHE CHEN // CHINA UNIVERSITY OF PETROLEUM, BEIJING (LATE 2024)
+            </div>
+          </div>
+
+          <div class="project-specs">
+            <div>
+              <div class="module-kicker">SIGNAL &amp; MODEL SPECIFICATION</div>
+              <table class="spec-table" aria-label="Real-Time Sleep Stage Estimation Specifications">
+                <tbody>
+                  <tr>
+                    <td>Signal Toolkit</td>
+                    <td>BioSPPy Filtering &amp; Feature Extraction</td>
+                  </tr>
+                  <tr>
+                    <td>Extracted Features</td>
+                    <td>Time-Domain, PSD, HRV, Movement Intensity</td>
+                  </tr>
+                  <tr>
+                    <td>Models Evaluated</td>
+                    <td>Random Forest, SVM, Neural Network</td>
+                  </tr>
+                  <tr>
+                    <td>Optimization</td>
+                    <td>Hyperparameter Tuning</td>
+                  </tr>
+                  <tr>
+                    <td>Interface</td>
+                    <td>Tkinter GUI (Raw vs. Filtered + Real-Time Stage)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <!-- Research Direction: ECG + RAG Exploration -->
+        <div class="exploration-banner">
+          <div class="exploration-main">
+            <div class="module-kicker">RESEARCH DIRECTION // UNDER EXPLORATION</div>
+            <h3 class="module-heading">
+              Research Area: ECG + Retrieval-Augmented Generation (RAG)
+            </h3>
+            <p class="longform-copy">
+              Exploring the intersection of <strong>electrocardiogram (ECG) signal analysis</strong> and <strong>retrieval-augmented generation (RAG)</strong> as a research area. Specific thesis topic formulation, dataset selection, and experimental methodology remain under exploration.
+            </p>
+          </div>
+
+          <div class="exploration-status-box">
+            <div class="readout-label">STATUS READOUT</div>
+            <div class="readout-value" style="margin-bottom: 0.65rem;">Topic Under Exploration</div>
+            <div style="color: var(--text-secondary); line-height: 1.6; font-size: 0.74rem;">
+              <div><strong>DIRECTION:</strong> ECG + RAG</div>
+              <div><strong>STAGE:</strong> Area Exploration</div>
+              <div><strong>THESIS TOPIC:</strong> Not Yet Chosen</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <footer>
-      <span>&copy; 2026 Moshfiqur Rahman Nayeem</span>
-      <span>Hosted on GitHub Pages</span>
-    </footer>
+    <!-- Scroll-Triggered 1mV Calibration Pulse + ECG Divider -->
+    <div class="ecg-divider" data-divider aria-hidden="true">
+      <span class="cal-pulse-tag">[1mV CAL] // RECORD</span>
+      <svg viewBox="0 0 800 24" preserveAspectRatio="none">
+        <path class="trace-divider-path" d="M 0 18 L 45 18 L 45 4 L 80 4 L 80 18 L 190 18 L 200 14 L 210 18 L 225 18 L 230 21 L 238 2 L 245 23 L 252 18 L 280 18 L 295 11 L 312 18 L 510 18 L 520 14 L 530 18 L 545 18 L 550 21 L 558 2 L 565 23 L 572 18 L 600 18 L 615 11 L 632 18 L 800 18" />
+      </svg>
+      <span class="divider-channel-tag">CH-02 // CUPB BEIJING</span>
+    </div>
+
+    <!-- ======================================================================
+         CHANNEL 02 // ACADEMIC RECORD (CUPB BEIJING)
+         ====================================================================== -->
+    <section class="swiss-section" id="ch-02">
+      <aside class="rail-col">
+        <div>
+          <div class="sec-number">
+            <span>CH-02</span>
+            <span>//</span>
+            <span>ACADEMICS</span>
+          </div>
+          <h2 class="sec-title">CUPB BEIJING</h2>
+          <p class="rail-desc">
+            Undergraduate Computer Science education in Beijing, with coursework and research in signal processing and machine learning.
+          </p>
+        </div>
+
+        <div class="rail-meta">
+          <div><span>UNIVERSITY</span><span>CUPB BEIJING</span></div>
+          <div><span>DEGREE</span><span>B.SC. COMP. SCI.</span></div>
+          <div><span>DISTINCTION</span><span>FIRST-CLASS SCHOLAR</span></div>
+          <div><span>STUDENT_ID</span><span>2023030060</span></div>
+        </div>
+      </aside>
+
+      <div class="main-col">
+        <div class="edu-row">
+          <div class="edu-main">
+            <div class="badge-box">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span>FIRST-CLASS SCHOLARSHIP RECIPIENT</span>
+            </div>
+            <h3 class="module-heading" style="margin-bottom: 0.35rem;">
+              China University of Petroleum, Beijing (CUPB)
+            </h3>
+            <div style="font-size: 0.78rem; color: var(--accent); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.1rem;">
+              Undergraduate in Computer Science &amp; Technology // Beijing, China
+            </div>
+            <p class="longform-copy">
+              Recipient of the <strong>First-Class Scholarship</strong> at <strong>China University of Petroleum, Beijing</strong>. Coursework and research projects center on physiological time-series analysis, machine learning, data pipelines, and Linux systems tooling.
+            </p>
+          </div>
+
+          <div class="edu-aside">
+            <div>
+              <div class="readout-label">CORE AREAS</div>
+              <ul class="spec-list" style="margin-top: 0.5rem;">
+                <li>&bull; Physiological Signal Analysis (ECG, BVP, HRV)</li>
+                <li>&bull; Machine Learning (XGBoost, SVM, RF, LSTM)</li>
+                <li>&bull; ECG + RAG Research Exploration</li>
+                <li>&bull; Linux Systems &amp; Shell Tooling</li>
+              </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--grid-line); padding-top: 0.75rem; font-size: 0.7rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+              <span>LOCATION</span>
+              <span style="color: var(--text-primary); font-weight: 600;">BEIJING, CHINA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scroll-Triggered 1mV Calibration Pulse + ECG Divider -->
+    <div class="ecg-divider" data-divider aria-hidden="true">
+      <span class="cal-pulse-tag">[1mV CAL] // WORKSTATION</span>
+      <svg viewBox="0 0 800 24" preserveAspectRatio="none">
+        <path class="trace-divider-path" d="M 0 18 L 110 18 L 120 14 L 130 18 L 145 18 L 150 21 L 158 2 L 165 23 L 172 18 L 200 18 L 215 11 L 232 18 L 410 18 L 410 4 L 445 4 L 445 18 L 600 18 L 610 14 L 620 18 L 635 18 L 640 21 L 648 2 L 655 23 L 662 18 L 690 18 L 705 11 L 722 18 L 800 18" />
+      </svg>
+      <span class="divider-channel-tag">CH-03 // ARCH / NVIM / ZSH</span>
+    </div>
+
+    <!-- ======================================================================
+         CHANNEL 03 // SYSTEMS ENVIRONMENT & BRAIN.ZSH
+         ====================================================================== -->
+    <section class="swiss-section" id="ch-03">
+      <aside class="rail-col">
+        <div>
+          <div class="sec-number">
+            <span>CH-03</span>
+            <span>//</span>
+            <span>ENVIRONMENT</span>
+          </div>
+          <h2 class="sec-title">SYSTEMS &amp; TOOLING</h2>
+          <p class="rail-desc">
+            Keyboard-driven Linux workflow built around Arch Linux, Neovim, Zsh, and custom shell scripts.
+          </p>
+        </div>
+
+        <div class="rail-meta">
+          <div><span>OS</span><span>ARCH LINUX</span></div>
+          <div><span>EDITOR</span><span>NEOVIM</span></div>
+          <div><span>SHELL</span><span>ZSH</span></div>
+          <div><span>TOOLING</span><span>BRAIN.ZSH</span></div>
+        </div>
+      </aside>
+
+      <div class="main-col">
+        <div class="sys-grid">
+          <!-- Module 01: brain.zsh -->
+          <div class="sys-cell">
+            <div>
+              <div class="sys-header">
+                <span class="sys-id">SYS.01 // SHELL TOOLING</span>
+                <span style="font-size: 0.7rem; color: var(--text-muted);">ZSH SCRIPT</span>
+              </div>
+              <h3 class="sys-name">brain.zsh</h3>
+              <p class="sys-desc">
+                Personal Zsh command-line tool for frictionless note capture, working-memory indexing, and task tracking directly inside the terminal—keeping thoughts and research scratchpads in plain text without leaving the shell.
+              </p>
+            </div>
+            <div class="sys-kv">
+              <span>INTERFACE</span>
+              <span>ZSH // PLAIN-TEXT CLI</span>
+            </div>
+          </div>
+
+          <!-- Module 02: Arch Linux -->
+          <div class="sys-cell">
+            <div>
+              <div class="sys-header">
+                <span class="sys-id">SYS.02 // OPERATING SYSTEM</span>
+                <span style="font-size: 0.7rem; color: var(--text-muted);">LINUX</span>
+              </div>
+              <h3 class="sys-name">Arch Linux</h3>
+              <p class="sys-desc">
+                Minimalist rolling-release environment configured from the ground up. Provides a predictable, low-overhead workstation for data analysis pipelines, Python/C++ development, and daily terminal work.
+              </p>
+            </div>
+            <div class="sys-kv">
+              <span>ENVIRONMENT</span>
+              <span>ARCH LINUX</span>
+            </div>
+          </div>
+
+          <!-- Module 03: Neovim -->
+          <div class="sys-cell">
+            <div>
+              <div class="sys-header">
+                <span class="sys-id">SYS.03 // TEXT EDITOR</span>
+                <span style="font-size: 0.7rem; color: var(--text-muted);">MODAL EDITOR</span>
+              </div>
+              <h3 class="sys-name">Neovim</h3>
+              <p class="sys-desc">
+                Keyboard-centric modal editing environment configured with native LSP and Treesitter for navigating codebases, writing analysis scripts, and maintaining technical documentation.
+              </p>
+            </div>
+            <div class="sys-kv">
+              <span>WORKFLOW</span>
+              <span>NVIM // MODAL</span>
+            </div>
+          </div>
+
+          <!-- Module 04: Zsh & Dotfiles -->
+          <div class="sys-cell">
+            <div>
+              <div class="sys-header">
+                <span class="sys-id">SYS.04 // COMMAND SHELL</span>
+                <span style="font-size: 0.7rem; color: var(--text-muted);">POSIX / ZSH</span>
+              </div>
+              <h3 class="sys-name">Zsh &amp; Terminal Workflow</h3>
+              <p class="sys-desc">
+                Streamlined shell configuration prioritizing fast command navigation, reproducible aliases, and composable scripts for managing datasets and project directories.
+              </p>
+            </div>
+            <div class="sys-kv">
+              <span>SHELL</span>
+              <span>ZSH</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Environment Readout Strip -->
+        <div class="terminal-console" aria-label="System Environment Summary">
+          <div class="term-prompt">nayeem@arch ~ % env --summary</div>
+          <div class="term-output">
+            <div><strong>USER:</strong> Moshfiqur Rahman Nayeem (@frogboynayeem)</div>
+            <div><strong>INSTITUTION:</strong> CUPB Beijing (First-Class Scholarship)</div>
+            <div><strong>WORKSTATION:</strong> Arch Linux + Neovim + Zsh</div>
+            <div><strong>SHELL TOOL:</strong> brain.zsh</div>
+            <div><strong>RESEARCH EXPLORATION:</strong> ECG + RAG</div>
+            <div><strong>CONTACT:</strong> 2023030060@student.cup.edu.cn</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scroll-Triggered 1mV Calibration Pulse + ECG Divider -->
+    <div class="ecg-divider" data-divider aria-hidden="true">
+      <span class="cal-pulse-tag">[1mV CAL] // PRINCIPLE</span>
+      <svg viewBox="0 0 800 24" preserveAspectRatio="none">
+        <path class="trace-divider-path" d="M 0 18 L 70 18 L 70 4 L 105 4 L 105 18 L 240 18 L 250 14 L 260 18 L 275 18 L 280 21 L 288 2 L 295 23 L 302 18 L 330 18 L 345 11 L 362 18 L 540 18 L 550 14 L 560 18 L 575 18 L 580 21 L 588 2 L 595 23 L 602 18 L 630 18 L 645 11 L 662 18 L 800 18" />
+      </svg>
+      <span class="divider-channel-tag">CH-04 // PONYTAIL PRINCIPLE</span>
+    </div>
+
+    <!-- ======================================================================
+         CHANNEL 04 // PHILOSOPHY: THE PONYTAIL PRINCIPLE
+         ====================================================================== -->
+    <section class="swiss-section" id="ch-04">
+      <aside class="rail-col">
+        <div>
+          <div class="sec-number">
+            <span>CH-04</span>
+            <span>//</span>
+            <span>PHILOSOPHY</span>
+          </div>
+          <h2 class="sec-title">THE PONYTAIL PRINCIPLE</h2>
+          <p class="rail-desc">
+            Personal engineering and design ethos governing how tools, workflows, and research systems are structured.
+          </p>
+        </div>
+
+        <div class="rail-meta">
+          <div><span>ETHOS</span><span>RESTRAINT &amp; CLARITY</span></div>
+          <div><span>FOCUS</span><span>SIGNAL OVER NOISE</span></div>
+        </div>
+      </aside>
+
+      <div class="main-col">
+        <div class="philosophy-grid">
+          <div class="philosophy-primary">
+            <div class="module-kicker">ENGINEERING ETHOS // THE PONYTAIL PRINCIPLE</div>
+            <h3 class="module-heading">
+              Tie Back the Noise. Keep the Line of Sight Clear.
+            </h3>
+            <p class="longform-copy" style="margin-bottom: 1rem;">
+              <strong>The Ponytail Principle</strong> is a commitment to practical restraint: gather loose complexity, bind it cleanly out of the way, and keep your field of view unobstructed while working on hard problems.
+            </p>
+            <p class="longform-copy">
+              Whether configuring a terminal environment in <span class="mono-tag">Arch Linux</span> and <span class="mono-tag">Neovim</span>, writing <span class="mono-tag">brain.zsh</span>, or cleaning noisy physiological waveforms, tools should never compete for attention. Every component should justify its presence through utility, legibility, and precision.
+            </p>
+          </div>
+
+          <div class="philosophy-axioms">
+            <div>
+              <div class="readout-label">OPERATING AXIOMS</div>
+              <ul class="spec-list" style="margin-top: 0.6rem;">
+                <li><strong>01.</strong> Prefer plain text, inspectable pipelines, and deterministic behavior.</li>
+                <li><strong>02.</strong> Strip ornamental complexity before optimizing execution.</li>
+                <li><strong>03.</strong> Report empirical results honestly—separate verified metrics from open questions.</li>
+              </ul>
+            </div>
+
+            <div style="border-top: 1px solid var(--grid-line); padding-top: 0.75rem; font-size: 0.7rem; color: var(--accent); font-weight: 600;">
+              DISCIPLINE // CLARITY // UTILITY
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         CHANNEL 05 // DIRECT CONTACT
+         ====================================================================== -->
+    <section class="swiss-section" id="ch-05" style="border-bottom: none;">
+      <aside class="rail-col">
+        <div>
+          <div class="sec-number">
+            <span>CH-05</span>
+            <span>//</span>
+            <span>CONTACT</span>
+          </div>
+          <h2 class="sec-title">DIRECT CHANNELS</h2>
+          <p class="rail-desc">
+            Academic correspondence, research discussions, and engineering inquiries.
+          </p>
+        </div>
+
+        <div class="rail-meta">
+          <div><span>TIMEZONE</span><span>UTC+08:00 (CST)</span></div>
+          <div><span>GITHUB</span><span>@FROGBOYNAYEEM</span></div>
+        </div>
+      </aside>
+
+      <div class="main-col">
+        <div class="comms-grid">
+          <div class="comms-primary">
+            <div class="module-kicker">CORRESPONDENCE</div>
+            <h3 class="module-heading">Get in Touch</h3>
+            <p class="longform-copy" style="margin-bottom: 1.5rem;">
+              For discussions regarding physiological signal processing, <strong>ECG + RAG</strong> research exploration, coursework projects, or Linux tooling, reach out via university email or GitHub.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.65rem;">
+              <a href="mailto:2023030060@student.cup.edu.cn" class="inst-btn primary">
+                <span>EMAIL // 2023030060@STUDENT.CUP.EDU.CN</span>
+              </a>
+              <button type="button" class="inst-btn" id="copyEmailFooterBtn">
+                <span>[COPY ADDRESS]</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="comms-links">
+            <a href="https://github.com/frogboynayeem" target="_blank" rel="noopener noreferrer" class="comms-link-row">
+              <div>
+                <div class="comms-label">05.1 // GITHUB</div>
+                <div class="comms-val">github.com/frogboynayeem</div>
+              </div>
+              <span class="comms-arrow">&#8599;</span>
+            </a>
+
+            <a href="mailto:2023030060@student.cup.edu.cn" class="comms-link-row">
+              <div>
+                <div class="comms-label">05.2 // UNIVERSITY EMAIL (CUPB)</div>
+                <div class="comms-val">2023030060@student.cup.edu.cn</div>
+              </div>
+              <span class="comms-arrow">&rarr;</span>
+            </a>
+
+            <a href="https://moshfiqur.me" class="comms-link-row">
+              <div>
+                <div class="comms-label">05.3 // DOMAIN</div>
+                <div class="comms-val">https://moshfiqur.me</div>
+              </div>
+              <span class="comms-arrow">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Colophon -->
+  <footer class="colophon" role="contentinfo">
+    <div>&copy; 2026 MOSHFIQUR RAHMAN NAYEEM (FROGBOYNAYEEM) // CUPB BEIJING</div>
+    <div>P3 SWISS THERMAL ECG PAPER &bull; SINGLE INDEX.HTML</div>
+  </footer>
+
+  <!-- Non-blocking Telemetry Toast for Clipboard Actions -->
+  <div class="telemetry-toast" id="telemetryToast" role="status" aria-live="polite">
+    <span class="status-dot" aria-hidden="true"></span>
+    <span id="toastMessage">COPIED TO CLIPBOARD</span>
   </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let prefersReducedMotion = reducedMotionQuery.matches;
+
+      /* ======================================================================
+         1. BEIJING (UTC+8) REAL-TIME CLOCK & STEPPED TELEMETRY COUNTER
+         ====================================================================== */
+      const clockEl = document.getElementById('beijingClock');
+      const steppedCounterEl = document.getElementById('steppedCounter');
+      let elapsedSeconds = 0;
+
+      function updateTelemetryClock() {
+        try {
+          const now = new Date();
+          const formatter = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Asia/Shanghai',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          });
+          if (clockEl) clockEl.textContent = formatter.format(now) + ' CST';
+        } catch (err) {
+          if (clockEl) clockEl.textContent = 'UTC+08:00 CST';
+        }
+
+        elapsedSeconds += 1;
+        if (steppedCounterEl) {
+          steppedCounterEl.textContent = String(elapsedSeconds).padStart(4, '0') + ' s';
+        }
+      }
+      updateTelemetryClock();
+      setInterval(updateTelemetryClock, 1000);
+
+      /* ======================================================================
+         2. CLIPBOARD COPY FOR VERIFIED EMAIL (2023030060@student.cup.edu.cn)
+         ====================================================================== */
+      const toastEl = document.getElementById('telemetryToast');
+      const toastMsgEl = document.getElementById('toastMessage');
+      let toastTimer = null;
+
+      function showToast(msg) {
+        if (!toastEl || !toastMsgEl) return;
+        toastMsgEl.textContent = msg;
+        toastEl.classList.add('visible');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toastEl.classList.remove('visible');
+        }, 2600);
+      }
+
+      function copyEmailAddress() {
+        const email = '2023030060@student.cup.edu.cn';
+        const tempInput = document.createElement('textarea');
+        tempInput.value = email;
+        tempInput.setAttribute('readonly', '');
+        tempInput.style.position = 'fixed';
+        tempInput.style.top = '-9999px';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+          document.execCommand('copy');
+          showToast('COPIED: ' + email);
+        } catch (e) {
+          showToast('EMAIL: ' + email);
+        }
+        document.body.removeChild(tempInput);
+      }
+
+      const copyHeroBtn = document.getElementById('copyEmailHeroBtn');
+      const copyFooterBtn = document.getElementById('copyEmailFooterBtn');
+      if (copyHeroBtn) copyHeroBtn.addEventListener('click', copyEmailAddress);
+      if (copyFooterBtn) copyFooterBtn.addEventListener('click', copyEmailAddress);
+
+      /* ======================================================================
+         3. SCROLL DEPTH TELEMETRY & SECTION DIVIDER TRACE DRAW-ON
+         ====================================================================== */
+      const scrollDepthReadout = document.getElementById('scrollDepthReadout');
+      const sections = document.querySelectorAll('.swiss-section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const dividers = document.querySelectorAll('[data-divider]');
+
+      function onScrollUpdate() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const mmEquivalent = Math.round(scrollY * 0.264);
+        if (scrollDepthReadout) {
+          scrollDepthReadout.textContent = String(mmEquivalent).padStart(3, '0') + ' mm';
+        }
+
+        let currentId = 'ch-00';
+        sections.forEach(function (sec) {
+          const rect = sec.getBoundingClientRect();
+          if (rect.top <= 180) {
+            currentId = sec.id;
+          }
+        });
+
+        navLinks.forEach(function (link) {
+          const href = link.getAttribute('href');
+          link.classList.toggle('active', href === '#' + currentId);
+        });
+      }
+      window.addEventListener('scroll', onScrollUpdate, { passive: true });
+
+      if ('IntersectionObserver' in window && !prefersReducedMotion) {
+        const dividerObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('drawn');
+              }
+            });
+          },
+          { threshold: 0.25 }
+        );
+        dividers.forEach(function (div) {
+          dividerObserver.observe(div);
+        });
+      } else {
+        dividers.forEach(function (div) {
+          div.classList.add('drawn');
+        });
+      }
+
+      /* ======================================================================
+         4. THERMAL ECG CHART OSCILLOSCOPE (WITH 1mV CAL PULSE & TOUCH PROBE)
+         ====================================================================== */
+      const canvas = document.getElementById('ecgCanvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+      const oscWrap = document.getElementById('oscWrap');
+      const leadLabel = document.getElementById('leadLabel');
+      const hrReadout = document.getElementById('hrReadout');
+      const rrReadout = document.getElementById('rrReadout');
+      const cursorProbeReadout = document.getElementById('cursorProbeReadout');
+      const motionStateReadout = document.getElementById('motionStateReadout');
+
+      let width = 800;
+      let height = 215;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      let traceBuffer = [];
+      let fiducialBuffer = [];
+      let writeIndex = 0;
+      let phase = 0;
+      let beatCounter = 0;
+      let isFrozen = prefersReducedMotion;
+      let showFiducials = true;
+      let currentMode = 'normal'; // 'normal' | 'filtered' | 'cal'
+      let probeX = null;
+      let probeY = null;
+
+      const modeSpecs = {
+        normal: {
+          label: 'LEAD II (SINUS RHYTHM)',
+          hr: '68 BPM',
+          rr: '882 ms',
+          speed: 0.0115
+        },
+        filtered: {
+          label: 'BANDPASS FILTERED (0.5–40 Hz CLEAN)',
+          hr: '66 BPM',
+          rr: '909 ms',
+          speed: 0.0110
+        },
+        cal: {
+          label: '1.0 mV SQUARE CALIBRATION + LEAD II',
+          hr: '68 BPM',
+          rr: '882 ms',
+          speed: 0.0115
+        }
+      };
+
+      function gaussian(x, mu, sigma, amp) {
+        const diff = x - mu;
+        return amp * Math.exp(-(diff * diff) / (2 * sigma * sigma));
+      }
+
+      function computeECGVoltage(cyclePhase, beatNum, mode) {
+        let v = 0;
+        let marker = null;
+
+        // Every 3rd cycle in 'cal' mode injects a 1.0 mV calibration square pulse
+        if (mode === 'cal' && beatNum % 3 === 0) {
+          if (cyclePhase >= 0.25 && cyclePhase <= 0.55) {
+            v = 1.0;
+            if (Math.abs(cyclePhase - 0.26) < 0.01) marker = '1mV CAL';
+          } else {
+            v = 0.0;
+          }
+          return { voltage: v, marker: marker };
+        }
+
+        // Standard Lead-II P-Q-R-S-T complex
+        v += gaussian(cyclePhase, 0.20, 0.025, 0.16);   // P wave
+        v += gaussian(cyclePhase, 0.36, 0.010, -0.17);  // Q dip
+        v += gaussian(cyclePhase, 0.39, 0.011, 1.25);   // R peak
+        v += gaussian(cyclePhase, 0.42, 0.012, -0.30);  // S dip
+        v += gaussian(cyclePhase, 0.64, 0.042, 0.30);   // T wave
+
+        if (Math.abs(cyclePhase - 0.20) < 0.008) marker = 'P';
+        else if (Math.abs(cyclePhase - 0.39) < 0.008) marker = 'R';
+        else if (Math.abs(cyclePhase - 0.64) < 0.008) marker = 'T';
+
+        if (mode === 'normal') {
+          v += 0.022 * Math.sin(cyclePhase * Math.PI * 2) + (Math.random() - 0.5) * 0.016;
+        }
+
+        return { voltage: v, marker: marker };
+      }
+
+      function resizeCanvas() {
+        if (!canvas || !oscWrap) return;
+        const rect = oscWrap.getBoundingClientRect();
+        width = Math.max(280, Math.floor(rect.width));
+        height = Math.max(170, Math.floor(rect.height));
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        traceBuffer = new Float32Array(width);
+        fiducialBuffer = new Array(width).fill(null);
+        let simPhase = 0;
+        let simBeat = 0;
+        const step = modeSpecs[currentMode].speed;
+
+        for (let i = 0; i < width; i++) {
+          simPhase += step;
+          if (simPhase >= 1) {
+            simPhase -= 1;
+            simBeat++;
+          }
+          const sample = computeECGVoltage(simPhase, simBeat, currentMode);
+          traceBuffer[i] = sample.voltage;
+          fiducialBuffer[i] = sample.marker;
+        }
+        writeIndex = Math.floor(width * 0.76);
+        phase = simPhase;
+        beatCounter = simBeat;
+      }
+
+      function renderStaticFrame() {
+        if (!ctx) return;
+
+        // P3 Swiss Thermal ECG Paper palette constants
+        const bgOsc = '#f7f4ec';
+        const gridSub = 'rgba(217, 56, 30, 0.085)';
+        const gridMajor = 'rgba(217, 56, 30, 0.21)';
+        const carbonInk = '#121316';
+        const vermilion = '#d9381e';
+        const textMuted = '#656058';
+
+        ctx.fillStyle = bgOsc;
+        ctx.fillRect(0, 0, width, height);
+
+        const smallBox = 10;
+        const largeBox = 50;
+
+        // 1mm vermilion sub-grid
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = gridSub;
+        ctx.beginPath();
+        for (let x = 0; x < width; x += smallBox) {
+          ctx.moveTo(x + 0.5, 0);
+          ctx.lineTo(x + 0.5, height);
+        }
+        for (let y = 0; y < height; y += smallBox) {
+          ctx.moveTo(0, y + 0.5);
+          ctx.lineTo(width, y + 0.5);
+        }
+        ctx.stroke();
+
+        // 5mm vermilion major grid
+        ctx.strokeStyle = gridMajor;
+        ctx.beginPath();
+        for (let x = 0; x < width; x += largeBox) {
+          ctx.moveTo(x + 0.5, 0);
+          ctx.lineTo(x + 0.5, height);
+        }
+        for (let y = 0; y < height; y += largeBox) {
+          ctx.moveTo(0, y + 0.5);
+          ctx.lineTo(width, y + 0.5);
+        }
+        ctx.stroke();
+
+        const baselineY = height * 0.64;
+        const scaleY = height * 0.36;
+        const eraseGap = 32;
+
+        // Fixed 1mV square calibration reference pulse on left margin (x: 12..46)
+        ctx.strokeStyle = vermilion;
+        ctx.lineWidth = 1.65;
+        ctx.beginPath();
+        ctx.moveTo(12, baselineY);
+        ctx.lineTo(18, baselineY);
+        ctx.lineTo(18, baselineY - scaleY);
+        ctx.lineTo(38, baselineY - scaleY);
+        ctx.lineTo(38, baselineY);
+        ctx.lineTo(46, baselineY);
+        ctx.stroke();
+
+        // Carbon ink ECG stylus waveform trace starting at x = 52
+        ctx.strokeStyle = carbonInk;
+        ctx.lineWidth = 1.75;
+        ctx.lineJoin = 'miter';
+        ctx.beginPath();
+
+        let penDown = false;
+        for (let x = 52; x < width; x++) {
+          const distAhead = (x - writeIndex + width) % width;
+          if (!prefersReducedMotion && distAhead > 0 && distAhead < eraseGap) {
+            penDown = false;
+            continue;
+          }
+          const y = baselineY - traceBuffer[x] * scaleY;
+          if (!penDown) {
+            ctx.moveTo(x, y);
+            penDown = true;
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+        ctx.stroke();
+
+        // Vermilion fiducial markers (P, R, T, 1mV CAL)
+        if (showFiducials) {
+          ctx.font = '600 10px "JetBrains Mono", monospace';
+          for (let x = 58; x < width - 16; x++) {
+            const distAhead = (x - writeIndex + width) % width;
+            if (!prefersReducedMotion && distAhead > 0 && distAhead < eraseGap) continue;
+
+            const marker = fiducialBuffer[x];
+            if (marker) {
+              const y = baselineY - traceBuffer[x] * scaleY;
+              ctx.fillStyle = vermilion;
+              ctx.fillText(marker, x - 4, y - 9);
+            }
+          }
+        }
+
+        // Draw active vermilion thermal stylus head
+        if (!prefersReducedMotion && writeIndex >= 52) {
+          const headX = (writeIndex - 1 + width) % width;
+          if (headX >= 52) {
+            const headY = baselineY - traceBuffer[headX] * scaleY;
+            ctx.fillStyle = vermilion;
+            ctx.fillRect(headX - 2.5, headY - 2.5, 5, 5);
+          }
+        }
+
+        // Measurement crosshair probe (supports both mouse and mobile touch)
+        if (probeX !== null && probeY !== null) {
+          ctx.strokeStyle = textMuted;
+          ctx.lineWidth = 1;
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath();
+          ctx.moveTo(probeX, 0);
+          ctx.lineTo(probeX, height);
+          ctx.moveTo(0, probeY);
+          ctx.lineTo(width, probeY);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          const sampleIdx = Math.min(width - 1, Math.max(0, Math.floor(probeX)));
+          const mv = traceBuffer[sampleIdx] || 0;
+          const ms = sampleIdx * 4;
+          if (cursorProbeReadout) {
+            cursorProbeReadout.textContent =
+              'PROBE [t=' + ms + 'ms, V=' + (mv >= 0 ? '+' : '') + mv.toFixed(2) + 'mV]';
+          }
+        }
+      }
+
+      function animateOscilloscope() {
+        if (!isFrozen && !prefersReducedMotion) {
+          const speed = modeSpecs[currentMode].speed;
+          for (let s = 0; s < 2; s++) {
+            phase += speed;
+            if (phase >= 1) {
+              phase -= 1;
+              beatCounter++;
+            }
+            const sample = computeECGVoltage(phase, beatCounter, currentMode);
+            traceBuffer[writeIndex] = sample.voltage;
+            fiducialBuffer[writeIndex] = sample.marker;
+            writeIndex = (writeIndex + 1) % width;
+            if (writeIndex < 52) writeIndex = 52;
+          }
+        }
+
+        renderStaticFrame();
+        requestAnimationFrame(animateOscilloscope);
+      }
+
+      // Wire oscilloscope mode buttons
+      const leadBtns = document.querySelectorAll('[data-lead]');
+      leadBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const mode = btn.getAttribute('data-lead');
+          if (!modeSpecs[mode]) return;
+          currentMode = mode;
+          leadBtns.forEach(function (b) {
+            b.classList.toggle('active', b === btn);
+          });
+          if (leadLabel) leadLabel.textContent = modeSpecs[mode].label;
+          if (hrReadout) hrReadout.textContent = modeSpecs[mode].hr;
+          if (rrReadout) rrReadout.textContent = modeSpecs[mode].rr;
+          resizeCanvas();
+          renderStaticFrame();
+        });
+      });
+
+      const fiducialBtn = document.getElementById('fiducialBtn');
+      if (fiducialBtn) {
+        fiducialBtn.addEventListener('click', function () {
+          showFiducials = !showFiducials;
+          fiducialBtn.classList.toggle('active', showFiducials);
+          fiducialBtn.textContent = 'FIDUCIALS: ' + (showFiducials ? 'ON' : 'OFF');
+          renderStaticFrame();
+        });
+      }
+
+      const freezeTraceBtn = document.getElementById('freezeTraceBtn');
+      if (freezeTraceBtn) {
+        if (prefersReducedMotion) {
+          freezeTraceBtn.classList.add('active');
+          freezeTraceBtn.textContent = 'HOLD: REDUCED MOTION';
+          if (motionStateReadout) motionStateReadout.textContent = 'STYLUS SWEEP: STATIC (REDUCED MOTION)';
+        }
+        freezeTraceBtn.addEventListener('click', function () {
+          isFrozen = !isFrozen;
+          freezeTraceBtn.classList.toggle('active', isFrozen);
+          freezeTraceBtn.textContent = 'HOLD: ' + (isFrozen ? 'ON' : 'OFF');
+          if (motionStateReadout) {
+            motionStateReadout.textContent = isFrozen ? 'STYLUS SWEEP: HELD' : 'STYLUS SWEEP: ACTIVE';
+          }
+        });
+      }
+
+      function updateProbeCoordinates(clientX, clientY) {
+        if (!oscWrap) return;
+        const rect = oscWrap.getBoundingClientRect();
+        probeX = Math.max(0, Math.min(width, clientX - rect.left));
+        probeY = Math.max(0, Math.min(height, clientY - rect.top));
+      }
+
+      if (oscWrap) {
+        oscWrap.addEventListener('mousemove', function (e) {
+          updateProbeCoordinates(e.clientX, e.clientY);
+        });
+        oscWrap.addEventListener('mouseleave', function () {
+          probeX = null;
+          probeY = null;
+          if (cursorProbeReadout) {
+            cursorProbeReadout.textContent = 'PROBE: HOVER OR DRAG TO MEASURE [t, mV]';
+          }
+        });
+        oscWrap.addEventListener('touchstart', function (e) {
+          if (e.touches && e.touches.length > 0) {
+            updateProbeCoordinates(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: true });
+        oscWrap.addEventListener('touchmove', function (e) {
+          if (e.touches && e.touches.length > 0) {
+            updateProbeCoordinates(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: true });
+        oscWrap.addEventListener('touchend', function () {
+          probeX = null;
+          probeY = null;
+          if (cursorProbeReadout) {
+            cursorProbeReadout.textContent = 'PROBE: HOVER OR DRAG TO MEASURE [t, mV]';
+          }
+        }, { passive: true });
+      }
+
+      window.addEventListener('resize', function () {
+        resizeCanvas();
+        renderStaticFrame();
+      });
+
+      window.onload = function () {
+        resizeCanvas();
+        animateOscilloscope();
+      };
+    })();
+  </script>
 </body>
 </html>
